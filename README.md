@@ -1,7 +1,5 @@
 # MultiplayerDebugTools
 
-> **Documentation website:** https://iamsince-1998.github.io/MultiplayerDebugTools-Docs/
-
 A runtime Unreal Engine plugin that provides a lightweight in-viewport multiplayer diagnostics overlay.
 
 - Toggle key: `F10`
@@ -224,43 +222,3 @@ From `MultiplayerDebugTools.uplugin`:
 - Supported engine range: `4.27` to `5.7`
 - Module type: `Runtime`
 - Category: `Networking`
-
-
-## Website
-
-- Live docs: `https://iamsince-1998.github.io/MultiplayerDebugTools-Docs/`
-- MultiplayerDebugTools page: `https://iamsince-1998.github.io/MultiplayerDebugTools-Docs/multiplayer-debug-tools/overview/`
-
-## Build & Deploy (GitHub Pages)
-
-This repo includes GitHub Actions workflows for both validation and deployment:
-
-- CI build (PR/feature branches): `.github/workflows/docs-ci.yml`
-- Production deploy (main): `.github/workflows/deploy-pages.yml`
-- Deployment target: `https://iamsince-1998.github.io/MultiplayerDebugTools-Docs/`
-
-### One-time GitHub setup
-
-1. Go to **Repository Settings → Pages**.
-2. Under **Build and deployment**, set **Source = GitHub Actions**.
-3. Go to **Repository Settings → Actions → General**.
-4. Ensure workflow permissions allow actions to run with default `GITHUB_TOKEN` (the deploy workflow already requests `pages:write` + `id-token:write`).
-5. Push to `main` (or run the deploy workflow manually from the **Actions** tab).
-
-### Deployment behavior
-
-- Pull requests and non-main branches run the CI workflow (`docs-ci.yml`) to verify the site builds.
-- Pushes to `main` run the Pages deployment workflow and publish the generated `build/` output.
-
-
-### If the website shows a blank page or 404
-
-1. Confirm repo name and URL path match:
-   - Repo: `MultiplayerDebugTools-Docs`
-   - Site: `https://iamsince-1998.github.io/MultiplayerDebugTools-Docs/`
-2. Verify **Settings → Pages** uses **GitHub Actions** as Source.
-3. Open **Actions → Deploy Docs to GitHub Pages** and ensure the latest run is green.
-4. Wait 1–2 minutes after a successful deploy, then hard refresh (`Ctrl+F5`).
-5. If you renamed the repo, redeploy from `main` so assets are rebuilt with the new path.
-
-> This repo now derives `baseUrl` from `GITHUB_REPOSITORY` in CI, reducing path mismatch issues.

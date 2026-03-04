@@ -14,11 +14,11 @@ const config = {
 
   // GitHub Pages URL — update these with your GitHub username and repo name
   url: 'https://iamsince-1998.github.io',
-  baseUrl: siteBaseUrl,
+  baseUrl: '/Plugins-Docs/',
 
   // GitHub Pages deployment config
   organizationName: 'iamsince-1998', // Your GitHub username
-  projectName: repoName,                   // GitHub repository name
+  projectName: 'MultiplayerDebugTools-Docs',                   // Your GitHub repo name
   // GitHub Pages serves folder-based routes more reliably than `.html` routes.
   // Keeping trailing slashes enabled prevents deep-link 404s on refresh.
   trailingSlash: true,

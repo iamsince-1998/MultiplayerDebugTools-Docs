@@ -9,8 +9,6 @@ sidebar_position: 1
 
 Welcome! This site hosts documentation for available Unreal Engine plugins.
 
-**Live website:** https://iamsince-1998.github.io/MultiplayerDebugTools-Docs/
-
 ## Documentation
 
 | Plugin | Status | Docs |
