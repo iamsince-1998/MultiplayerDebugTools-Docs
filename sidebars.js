@@ -10,26 +10,7 @@ const sidebars = {
       type: 'category',
       label: 'MultiplayerDebugTools',
       collapsed: false,
-      items: [
-        'multiplayer-debug-tools/overview',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Replicated Containers',
-      collapsed: false,
-      items: [
-        'replicated-containers/overview',
-        'replicated-containers/installation',
-        'replicated-containers/quickstart-blueprint',
-        'replicated-containers/quickstart-cpp',
-        'replicated-containers/api-reference',
-        'replicated-containers/how-it-works',
-        'replicated-containers/dedicated-server',
-        'replicated-containers/rules-and-gotchas',
-        'replicated-containers/troubleshooting',
-        'replicated-containers/changelog',
-      ],
+      items: ['multiplayer-debug-tools/overview'],
     },
   ],
 };

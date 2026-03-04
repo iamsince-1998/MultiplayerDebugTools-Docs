@@ -1,27 +1,57 @@
 /**
- * Any CSS included here will be global.
+ * Global Docusaurus styling.
  */
 
-/* Custom primary color — change to match your brand */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #5b5bd6;
+  --ifm-color-primary-dark: #4a4ac8;
+  --ifm-color-primary-darker: #4343bc;
+  --ifm-color-primary-darkest: #32328f;
+  --ifm-color-primary-light: #6a6ae3;
+  --ifm-color-primary-lighter: #7676e7;
+  --ifm-color-primary-lightest: #9f9ff0;
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(91, 91, 214, 0.14);
 }
 
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #8b8bff;
+  --ifm-color-primary-dark: #7676ff;
+  --ifm-color-primary-darker: #6969ff;
+  --ifm-color-primary-darkest: #4d4dff;
+  --ifm-color-primary-light: #a0a0ff;
+  --ifm-color-primary-lighter: #adadff;
+  --ifm-color-primary-lightest: #c9c9ff;
+  --docusaurus-highlighted-code-line-bg: rgba(139, 139, 255, 0.22);
+}
+
+.hero,
+.navbar {
+  backdrop-filter: saturate(160%) blur(6px);
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  letter-spacing: 0.2px;
+}
+
+.markdown p,
+.markdown li {
+  line-height: 1.75;
+}
+
+.theme-admonition {
+  border-radius: 14px;
+}
+
+.table-of-contents {
+  border-left: 2px solid var(--ifm-color-primary-lightest);
+}
+
+.markdown table {
+  display: table;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
 }

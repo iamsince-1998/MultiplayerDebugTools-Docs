@@ -77,7 +77,6 @@ const config = {
             items: [
               { label: 'Introduction', to: '/' },
               { label: 'MultiplayerDebugTools', to: '/multiplayer-debug-tools/overview' },
-              { label: 'Replicated Containers', to: '/replicated-containers/overview' },
             ],
           },
           {
