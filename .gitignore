@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+
+# Build output
+build/
+.docusaurus/
+
+# Generated files
+.cache/
+
+# Env
+.env
+.env.local
