@@ -3,13 +3,13 @@ const { themes: prismThemes } = require('prism-react-renderer');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Replicated Containers Docs',
-  tagline: 'Documentation for the Replicated Containers plugin',
+  title: 'Plugins Docs',
+  tagline: 'Documentation for Unreal Engine plugins',
   favicon: 'img/logo.svg',
 
   // GitHub Pages URL — update these with your GitHub username and repo name
   url: 'https://iamsince-1998.github.io',
-  baseUrl: '/ReplicatedContainers-Docs/',
+  baseUrl: '/Plugins-Docs/',
 
   // GitHub Pages deployment config
   organizationName: 'iamsince-1998', // Your GitHub username
@@ -54,9 +54,9 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'Replicated Containers Docs',
+        title: 'Plugins Docs',
         logo: {
-          alt: 'Replicated Containers Docs Logo',
+          alt: 'Plugins Docs Logo',
           src: 'img/logo.svg',
         },
         items: [
@@ -80,6 +80,7 @@ const config = {
             title: 'Docs',
             items: [
               { label: 'Introduction', to: '/' },
+              { label: 'MultiplayerDebugTools', to: '/multiplayer-debug-tools/overview' },
               { label: 'Replicated Containers', to: '/replicated-containers/overview' },
             ],
           },
@@ -117,7 +118,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Replicated Containers Docs. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Plugins Docs. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,

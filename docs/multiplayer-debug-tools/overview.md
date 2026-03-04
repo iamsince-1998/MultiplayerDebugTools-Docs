@@ -1,6 +1,10 @@
-# MultiplayerDebugTools
+---
+id: overview
+title: Overview
+sidebar_position: 1
+---
 
-> **Documentation website:** https://iamsince-1998.github.io/Plugins-Docs/
+# MultiplayerDebugTools
 
 A runtime Unreal Engine plugin that provides a lightweight in-viewport multiplayer diagnostics overlay.
 
@@ -9,13 +13,9 @@ A runtime Unreal Engine plugin that provides a lightweight in-viewport multiplay
 - Overlay type: Slate widget (`SMultiplayerDebugOverlay`)
 - Data provider: `UGameInstanceSubsystem` (`UMultiplayerDebugSubsystem`)
 
-The plugin is designed for quick multiplayer validation during PIE, standalone, and packaged gameplay sessions.
-
 Supported engine range: `UE 4.27` through `UE 5.7`.
 
 ## What It Shows
-
-The overlay can display the following metrics:
 
 - `Role`: `Standalone`, `Client`, `Listen Server`, or `Dedicated Server`
 - `FPS`: sampled from `GAverageFPS`
@@ -31,18 +31,14 @@ If no network connection is present, network-dependent metrics show `N/A`.
 
 ## Visual Thresholds
 
-Color coding used by the overlay:
-
 - **FPS**
   - Green: `>= 55`
   - Yellow: `>= 25 and < 55`
   - Red: `< 25`
-
 - **Ping**
   - Green: `< 50 ms`
   - Yellow: `< 100 ms`
   - Red: `>= 100 ms`
-
 - **Packet Loss**
   - Green: `< 1%`
   - Yellow: `< 5%`
@@ -90,8 +86,6 @@ For multiplayer validation in PIE:
 ### Event Dispatcher
 
 - `OnStatsUpdated(FMultiplayerDebugStatsSnapshot Snapshot)`
-
-The subsystem broadcasts updates when values change (or when forced via `RefreshStatsNow`).
 
 ### Feature Enum
 
@@ -141,8 +135,6 @@ if (UGameInstance* GI = GetGameInstance())
     if (UMultiplayerDebugSubsystem* DebugSub = GI->GetSubsystem<UMultiplayerDebugSubsystem>())
     {
         DebugSub->ToggleOverlay();
-
-        // Optional runtime control
         DebugSub->SetFeatureEnabled(EMultiplayerDebugMetric::Bandwidth, true);
         DebugSub->SetStatsUpdateInterval(0.2f);
     }
@@ -167,8 +159,6 @@ DebugSub->OnStatsUpdated.AddDynamic(this, &UMyObject::HandleStatsUpdated);
 
 ## Module Architecture
 
-Core classes:
-
 - `FMultiplayerDebugToolsModule`
   - Registers `mdt.Toggle` console command.
   - Registers an input preprocessor for `F10`.
@@ -180,53 +170,16 @@ Core classes:
   - Draws the widget.
   - Pulls subsystem snapshot and applies color/formatting.
 
-Data flow:
-
-1. User input (`F10`) or console (`mdt.Toggle`) calls subsystem toggle.
-2. Subsystem creates/removes overlay widget in viewport.
-3. Subsystem ticker updates cached snapshot.
-4. Overlay active timer reads snapshot and renders values.
-
 ## Build and Dependencies
-
-Module dependencies:
 
 - Public: `Core`, `CoreUObject`, `Engine`, `InputCore`
 - Private (non-server targets): `Slate`, `SlateCore`
 
 If your game module includes plugin headers, add `"MultiplayerDebugTools"` to your module dependencies.
 
-## Limitations and Notes
+## Limitations and Troubleshooting
 
 - Overlay requires a viewport (not visible on dedicated server process).
-- `F10` can be consumed by this plugin input preprocessor.
 - In standalone/non-networked sessions, network metrics are expected to be `N/A`.
-- Packet loss values are computed from cumulative packet counters at sample time.
-
-## Troubleshooting
-
-- **Overlay not visible:**
-  - Verify plugin is enabled and editor restarted.
-  - Run `mdt.Toggle` directly in console.
-- **`F10` does nothing:**
-  - Test with `mdt.Toggle`.
-  - Check if another system is intercepting `F10`.
-- **Ping/loss/bandwidth show `N/A`:**
-  - Ensure session is networked (listen server + client(s), or client connected to server).
-- **No overlay on dedicated server:**
-  - Expected behavior; view stats from a client/listen-server viewport.
-
-## Version and Engine
-
-From `MultiplayerDebugTools.uplugin`:
-
-- Version: `1.0.0`
-- Supported engine range: `4.27` to `5.7`
-- Module type: `Runtime`
-- Category: `Networking`
-
-
-## Website
-
-- Live docs: `https://iamsince-1998.github.io/Plugins-Docs/`
-- MultiplayerDebugTools page: `https://iamsince-1998.github.io/Plugins-Docs/multiplayer-debug-tools/overview/`
+- If `F10` does nothing, test `mdt.Toggle` in console and check key interception.
+- If ping/loss/bandwidth show `N/A`, ensure the session is actually networked.
