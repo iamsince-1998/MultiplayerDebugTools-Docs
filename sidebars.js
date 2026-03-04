@@ -8,6 +8,14 @@ const sidebars = {
     },
     {
       type: 'category',
+      label: 'MultiplayerDebugTools',
+      collapsed: false,
+      items: [
+        'multiplayer-debug-tools/overview',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Replicated Containers',
       collapsed: false,
       items: [

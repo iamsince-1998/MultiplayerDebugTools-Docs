@@ -1,19 +1,24 @@
 // @ts-check
 const { themes: prismThemes } = require('prism-react-renderer');
 
+const repoFromEnv = process.env.GITHUB_REPOSITORY?.split('/')[1];
+const repoName = repoFromEnv || 'MultiplayerDebugTools-Docs';
+const baseUrlFromEnv = process.env.DOCS_BASE_URL;
+const siteBaseUrl = baseUrlFromEnv || `/${repoName}/`;
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Replicated Containers Docs',
-  tagline: 'Documentation for the Replicated Containers plugin',
+  title: 'Plugins Docs',
+  tagline: 'Documentation for Unreal Engine plugins',
   favicon: 'img/logo.svg',
 
   // GitHub Pages URL — update these with your GitHub username and repo name
   url: 'https://iamsince-1998.github.io',
-  baseUrl: '/ReplicatedContainers-Docs/',
+  baseUrl: siteBaseUrl,
 
   // GitHub Pages deployment config
   organizationName: 'iamsince-1998', // Your GitHub username
-  projectName: 'Plugins-Docs',                   // Your GitHub repo name
+  projectName: repoName,                   // GitHub repository name
   // GitHub Pages serves folder-based routes more reliably than `.html` routes.
   // Keeping trailing slashes enabled prevents deep-link 404s on refresh.
   trailingSlash: true,
@@ -40,7 +45,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           routeBasePath: '/',  // Docs at root, no /docs prefix
-          editUrl: 'https://github.com/iamsince-1998/Plugins-Docs/edit/main/',
+          editUrl: 'https://github.com/iamsince-1998/MultiplayerDebugTools-Docs/edit/main/',
         },
         blog: false, // Disable blog
         theme: {
@@ -54,9 +59,9 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'Replicated Containers Docs',
+        title: 'Plugins Docs',
         logo: {
-          alt: 'Replicated Containers Docs Logo',
+          alt: 'Plugins Docs Logo',
           src: 'img/logo.svg',
         },
         items: [
@@ -80,6 +85,7 @@ const config = {
             title: 'Docs',
             items: [
               { label: 'Introduction', to: '/' },
+              { label: 'MultiplayerDebugTools', to: '/multiplayer-debug-tools/overview' },
               { label: 'Replicated Containers', to: '/replicated-containers/overview' },
             ],
           },
@@ -117,7 +123,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Replicated Containers Docs. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Plugins Docs. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,
