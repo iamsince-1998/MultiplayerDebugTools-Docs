@@ -1,6 +1,11 @@
 // @ts-check
 const { themes: prismThemes } = require('prism-react-renderer');
 
+const repoFromEnv = process.env.GITHUB_REPOSITORY?.split('/')[1];
+const repoName = repoFromEnv || 'MultiplayerDebugTools-Docs';
+const baseUrlFromEnv = process.env.DOCS_BASE_URL;
+const siteBaseUrl = baseUrlFromEnv || `/${repoName}/`;
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Plugins Docs',
