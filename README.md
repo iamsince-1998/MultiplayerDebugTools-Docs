@@ -1,7 +1,5 @@
 # MultiplayerDebugTools
 
-> **Documentation website:** https://iamsince-1998.github.io/Plugins-Docs/
-
 A runtime Unreal Engine plugin that provides a lightweight in-viewport multiplayer diagnostics overlay.
 
 - Toggle key: `F10`
@@ -224,9 +222,3 @@ From `MultiplayerDebugTools.uplugin`:
 - Supported engine range: `4.27` to `5.7`
 - Module type: `Runtime`
 - Category: `Networking`
-
-
-## Website
-
-- Live docs: `https://iamsince-1998.github.io/Plugins-Docs/`
-- MultiplayerDebugTools page: `https://iamsince-1998.github.io/Plugins-Docs/multiplayer-debug-tools/overview/`
