@@ -1,7 +1,5 @@
 # MultiplayerDebugTools
 
-> **Documentation website:** https://iamsince-1998.github.io/Plugins-Docs/
-
 A runtime Unreal Engine plugin that provides a lightweight in-viewport multiplayer diagnostics overlay.
 
 - Toggle key: `F10`
@@ -224,22 +222,3 @@ From `MultiplayerDebugTools.uplugin`:
 - Supported engine range: `4.27` to `5.7`
 - Module type: `Runtime`
 - Category: `Networking`
-
-
-## Website
-
-- Live docs: `https://iamsince-1998.github.io/Plugins-Docs/`
-- MultiplayerDebugTools page: `https://iamsince-1998.github.io/Plugins-Docs/multiplayer-debug-tools/overview/`
-
-## Build & Deploy (GitHub Pages)
-
-This repo includes a GitHub Actions workflow that automatically builds and deploys the Docusaurus site to GitHub Pages on every push to `main`.
-
-- Workflow file: `.github/workflows/deploy-pages.yml`
-- Deployment target: `https://iamsince-1998.github.io/Plugins-Docs/`
-
-### One-time GitHub setup
-
-1. Go to **Repository Settings → Pages**.
-2. Under **Build and deployment**, set **Source = GitHub Actions**.
-3. Push to `main` (or run the workflow manually from the **Actions** tab).
