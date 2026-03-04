@@ -9,7 +9,7 @@ const config = {
 
   // GitHub Pages URL — update these with your GitHub username and repo name
   url: 'https://iamsince-1998.github.io',
-  baseUrl: '/MultiplayerDebugTools-Docs/',
+  baseUrl: '/Plugins-Docs/',
 
   // GitHub Pages deployment config
   organizationName: 'iamsince-1998', // Your GitHub username
