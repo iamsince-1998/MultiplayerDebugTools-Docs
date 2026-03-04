@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MultiplayerDebugTools Docs</title>
+    <meta
+      name="description"
+      content="Documentation for MultiplayerDebugTools, a runtime Unreal Engine plugin for in-viewport multiplayer diagnostics."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="container">
+        <p class="eyebrow">Unreal Engine Runtime Plugin</p>
+        <h1>MultiplayerDebugTools</h1>
+        <p class="subtitle">
+          A lightweight in-viewport multiplayer diagnostics overlay for PIE, standalone,
+          and packaged sessions.
+        </p>
+        <div class="quick-facts">
+          <span><strong>Toggle:</strong> F10</span>
+          <span><strong>Console:</strong> <code>mdt.Toggle</code></span>
+          <span><strong>Subsystem:</strong> <code>UMultiplayerDebugSubsystem</code></span>
+          <span><strong>Engine:</strong> UE 4.27 → 5.7</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="container layout">
+      <aside class="toc">
+        <h2>On this page</h2>
+        <nav>
+          <a href="#what-it-shows">What It Shows</a>
+          <a href="#visual-thresholds">Visual Thresholds</a>
+          <a href="#installation">Installation</a>
+          <a href="#quick-usage">Quick Usage</a>
+          <a href="#blueprint-api">Blueprint API</a>
+          <a href="#cpp-usage">C++ Usage</a>
+          <a href="#runtime-behavior">Runtime Behavior</a>
+          <a href="#module-architecture">Module Architecture</a>
+          <a href="#dependencies">Build & Dependencies</a>
+          <a href="#limitations">Limitations & Notes</a>
+          <a href="#troubleshooting">Troubleshooting</a>
+          <a href="#version">Version & Engine</a>
+        </nav>
+      </aside>
+
+      <article class="content">
+        <section id="what-it-shows">
+          <h2>What It Shows</h2>
+          <ul>
+            <li><code>Role</code>: Standalone, Client, Listen Server, or Dedicated Server</li>
+            <li><code>FPS</code>: sampled from <code>GAverageFPS</code></li>
+            <li><code>Ping (ms)</code>: average across active net connections</li>
+            <li><code>Loss In (%)</code>: inbound packet loss percent</li>
+            <li><code>Loss Out (%)</code>: outbound packet loss percent</li>
+            <li><code>Recv</code>: inbound bandwidth (B/s, KB/s, MB/s)</li>
+            <li><code>Sent</code>: outbound bandwidth (B/s, KB/s, MB/s)</li>
+            <li><code>Actors</code>: total actor count in world</li>
+            <li><code>Net Actors</code>: replicated actor count (<code>GetIsReplicated()</code>)</li>
+          </ul>
+          <p>If no network connection is present, network-dependent metrics display <code>N/A</code>.</p>
+        </section>
+
+        <section id="visual-thresholds">
+          <h2>Visual Thresholds</h2>
+          <div class="cards">
+            <div class="card">
+              <h3>FPS</h3>
+              <p><span class="good">Green:</span> <code>&gt;= 55</code></p>
+              <p><span class="warn">Yellow:</span> <code>&gt;= 25 and &lt; 55</code></p>
+              <p><span class="bad">Red:</span> <code>&lt; 25</code></p>
+            </div>
+            <div class="card">
+              <h3>Ping</h3>
+              <p><span class="good">Green:</span> <code>&lt; 50 ms</code></p>
+              <p><span class="warn">Yellow:</span> <code>&lt; 100 ms</code></p>
+              <p><span class="bad">Red:</span> <code>&gt;= 100 ms</code></p>
+            </div>
+            <div class="card">
+              <h3>Packet Loss</h3>
+              <p><span class="good">Green:</span> <code>&lt; 1%</code></p>
+              <p><span class="warn">Yellow:</span> <code>&lt; 5%</code></p>
+              <p><span class="bad">Red:</span> <code>&gt;= 5%</code></p>
+            </div>
+          </div>
+          <p>Disabled metrics display <code>Off</code> in a dim color.</p>
+        </section>
+
+        <section id="installation">
+          <h2>Installation</h2>
+          <ol>
+            <li>Place <code>MultiplayerDebugTools</code> under your project <code>Plugins/</code> folder.</li>
+            <li>Open the project in Unreal Editor.</li>
+            <li>Enable <strong>Multiplayer Debug Tools</strong> from <strong>Edit &gt; Plugins</strong>.</li>
+            <li>Restart the editor when prompted.</li>
+          </ol>
+        </section>
+
+        <section id="quick-usage">
+          <h2>Quick Usage</h2>
+          <ul>
+            <li>Press <code>F10</code> to toggle the overlay.</li>
+            <li>Or run <code>mdt.Toggle</code> in the console.</li>
+          </ul>
+          <p>For multiplayer validation in PIE:</p>
+          <ol>
+            <li>Set <strong>Number of Players</strong> to 2+.</li>
+            <li>Set play mode to <strong>Listen Server</strong>.</li>
+            <li>Launch PIE.</li>
+            <li>Toggle overlay per window and compare role/ping/loss/bandwidth values.</li>
+          </ol>
+        </section>
+
+        <section id="blueprint-api">
+          <h2>Blueprint API</h2>
+          <p>
+            <code>UMultiplayerDebugSubsystem</code> is exposed to Blueprint and can be retrieved from
+            Game Instance subsystem access.
+          </p>
+
+          <h3>Functions</h3>
+          <ul class="cols">
+            <li><code>ToggleOverlay()</code></li>
+            <li><code>IsOverlayVisible() -&gt; bool</code></li>
+            <li><code>GetStatsSnapshot() -&gt; FMultiplayerDebugStatsSnapshot</code></li>
+            <li><code>RefreshStatsNow()</code></li>
+            <li><code>SetStatsUpdateInterval(float InSeconds)</code></li>
+            <li><code>GetStatsUpdateInterval() -&gt; float</code></li>
+            <li><code>GetFeatureToggles() -&gt; FMultiplayerDebugFeatureToggles</code></li>
+            <li><code>SetFeatureToggles(FMultiplayerDebugFeatureToggles)</code></li>
+            <li><code>SetFeatureEnabled(EMultiplayerDebugMetric Feature, bool bEnabled)</code></li>
+            <li><code>IsFeatureEnabled(EMultiplayerDebugMetric Feature) -&gt; bool</code></li>
+            <li><code>SetAllFeaturesEnabled(bool bEnabled)</code></li>
+          </ul>
+
+          <h3>Event Dispatcher</h3>
+          <ul>
+            <li><code>OnStatsUpdated(FMultiplayerDebugStatsSnapshot Snapshot)</code></li>
+          </ul>
+
+          <h3>Feature Enum</h3>
+          <ul>
+            <li><code>Role</code></li>
+            <li><code>FPS</code></li>
+            <li><code>Ping</code></li>
+            <li><code>PacketLoss</code></li>
+            <li><code>Bandwidth</code></li>
+            <li><code>ActorCounts</code></li>
+          </ul>
+
+          <h3>Snapshot Struct</h3>
+          <ul>
+            <li><code>EnabledFeatures</code></li>
+            <li><code>NetRole</code></li>
+            <li><code>FPS</code></li>
+            <li><code>PingMs</code></li>
+            <li><code>PacketLossInPercent</code></li>
+            <li><code>PacketLossOutPercent</code></li>
+            <li><code>BandwidthInBytesPerSecond</code></li>
+            <li><code>BandwidthOutBytesPerSecond</code></li>
+            <li><code>TotalActors</code></li>
+            <li><code>ReplicatedActors</code></li>
+            <li><code>bHasNetworkConnection</code></li>
+          </ul>
+
+          <h3>Feature Toggle Struct</h3>
+          <ul>
+            <li><code>bRole</code></li>
+            <li><code>bFPS</code></li>
+            <li><code>bPing</code></li>
+            <li><code>bPacketLoss</code></li>
+            <li><code>bBandwidth</code></li>
+            <li><code>bActorCounts</code></li>
+          </ul>
+        </section>
+
+        <section id="cpp-usage">
+          <h2>C++ Usage</h2>
+          <pre><code>#include "MultiplayerDebugSubsystem.h"
+
+if (UGameInstance* GI = GetGameInstance())
+{
+    if (UMultiplayerDebugSubsystem* DebugSub = GI-&gt;GetSubsystem&lt;UMultiplayerDebugSubsystem&gt;())
+    {
+        DebugSub-&gt;ToggleOverlay();
+
+        // Optional runtime control
+        DebugSub-&gt;SetFeatureEnabled(EMultiplayerDebugMetric::Bandwidth, true);
+        DebugSub-&gt;SetStatsUpdateInterval(0.2f);
+    }
+}</code></pre>
+
+          <p>Bind to updates:</p>
+          <pre><code>DebugSub-&gt;OnStatsUpdated.AddDynamic(this, &amp;UMyObject::HandleStatsUpdated);</code></pre>
+        </section>
+
+        <section id="runtime-behavior">
+          <h2>Runtime Behavior</h2>
+          <ul>
+            <li>Stats ticker interval default: <code>0.25s</code> (minimum clamp: <code>0.05s</code>).</li>
+            <li>Actor counts are internally refreshed at <code>1.0s</code> intervals.</li>
+            <li>Overlay refresh timer is <code>0.25s</code>.</li>
+            <li>Packet/bandwidth data is sampled from net driver connections.</li>
+            <li>Client side uses <code>ServerConnection</code>.</li>
+            <li>Server side aggregates <code>ClientConnections</code>.</li>
+            <li>Dedicated server builds (<code>UE_SERVER</code>) skip Slate overlay/input handling.</li>
+          </ul>
+        </section>
+
+        <section id="module-architecture">
+          <h2>Module Architecture</h2>
+          <h3>Core classes</h3>
+          <ul>
+            <li><code>FMultiplayerDebugToolsModule</code>: registers <code>mdt.Toggle</code> and F10 input.</li>
+            <li><code>UMultiplayerDebugSubsystem</code>: collects/caches stats and emits updates.</li>
+            <li><code>SMultiplayerDebugOverlay</code>: renders widget values with color/formatting.</li>
+          </ul>
+          <h3>Data flow</h3>
+          <ol>
+            <li>User input (<code>F10</code>) or console command (<code>mdt.Toggle</code>) toggles overlay state.</li>
+            <li>Subsystem creates/removes overlay widget in viewport.</li>
+            <li>Subsystem ticker updates cached snapshot.</li>
+            <li>Overlay timer reads snapshot and renders values.</li>
+          </ol>
+        </section>
+
+        <section id="dependencies">
+          <h2>Build &amp; Dependencies</h2>
+          <p><strong>Module dependencies</strong></p>
+          <ul>
+            <li>Public: <code>Core</code>, <code>CoreUObject</code>, <code>Engine</code>, <code>InputCore</code></li>
+            <li>Private (non-server): <code>Slate</code>, <code>SlateCore</code></li>
+          </ul>
+          <p>
+            If your game module includes plugin headers, add
+            <code>"MultiplayerDebugTools"</code> to your module dependencies.
+          </p>
+        </section>
+
+        <section id="limitations">
+          <h2>Limitations &amp; Notes</h2>
+          <ul>
+            <li>Overlay requires a viewport (not visible on dedicated server process).</li>
+            <li><code>F10</code> can be consumed by this plugin input preprocessor.</li>
+            <li>In standalone/non-networked sessions, network metrics are expected to be <code>N/A</code>.</li>
+            <li>Packet loss values are computed from cumulative packet counters at sample time.</li>
+          </ul>
+        </section>
+
+        <section id="troubleshooting">
+          <h2>Troubleshooting</h2>
+          <h3>Overlay not visible</h3>
+          <ul>
+            <li>Verify plugin is enabled and editor restarted.</li>
+            <li>Run <code>mdt.Toggle</code> directly in console.</li>
+          </ul>
+          <h3><code>F10</code> does nothing</h3>
+          <ul>
+            <li>Test with <code>mdt.Toggle</code>.</li>
+            <li>Check if another system is intercepting <code>F10</code>.</li>
+          </ul>
+          <h3>Ping/loss/bandwidth show <code>N/A</code></h3>
+          <ul>
+            <li>Ensure session is networked (listen server + client(s), or client connected to server).</li>
+          </ul>
+          <h3>No overlay on dedicated server</h3>
+          <ul>
+            <li>Expected behavior; view stats from a client/listen-server viewport.</li>
+          </ul>
+        </section>
+
+        <section id="version">
+          <h2>Version &amp; Engine</h2>
+          <ul>
+            <li>Version: <code>1.0.0</code></li>
+            <li>Supported engine range: <code>4.27</code> to <code>5.7</code></li>
+            <li>Module type: <code>Runtime</code></li>
+            <li>Category: <code>Networking</code></li>
+          </ul>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>
