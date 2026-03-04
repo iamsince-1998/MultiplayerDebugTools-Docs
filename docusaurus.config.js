@@ -13,7 +13,7 @@ const config = {
 
   // GitHub Pages deployment config
   organizationName: 'iamsince-1998', // Your GitHub username
-  projectName: 'Plugins-Docs',                   // Your GitHub repo name
+  projectName: 'MultiplayerDebugTools-Docs',                   // Your GitHub repo name
   // GitHub Pages serves folder-based routes more reliably than `.html` routes.
   // Keeping trailing slashes enabled prevents deep-link 404s on refresh.
   trailingSlash: true,
@@ -40,7 +40,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           routeBasePath: '/',  // Docs at root, no /docs prefix
-          editUrl: 'https://github.com/iamsince-1998/Plugins-Docs/edit/main/',
+          editUrl: 'https://github.com/iamsince-1998/MultiplayerDebugTools-Docs/edit/main/',
         },
         blog: false, // Disable blog
         theme: {
