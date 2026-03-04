@@ -6,70 +6,91 @@ sidebar_position: 1
 
 # MultiplayerDebugTools
 
-A runtime Unreal Engine plugin that provides a lightweight in-viewport multiplayer diagnostics overlay.
+A modern, runtime Unreal Engine plugin that gives you a **lightweight multiplayer diagnostics HUD** directly in the viewport.
 
-- Toggle key: `F10`
-- Console command: `mdt.Toggle`
-- Overlay type: Slate widget (`SMultiplayerDebugOverlay`)
-- Data provider: `UGameInstanceSubsystem` (`UMultiplayerDebugSubsystem`)
+:::info Core controls
+- **Toggle key:** `F10`
+- **Console command:** `mdt.Toggle`
+- **Overlay widget:** `SMultiplayerDebugOverlay`
+- **Subsystem:** `UMultiplayerDebugSubsystem` (`UGameInstanceSubsystem`)
+- **Engine support:** `UE 4.27` → `UE 5.7`
+:::
 
-Supported engine range: `UE 4.27` through `UE 5.7`.
+---
 
-## What It Shows
+## Why It’s Useful
 
-- `Role`: `Standalone`, `Client`, `Listen Server`, or `Dedicated Server`
-- `FPS`: sampled from `GAverageFPS`
-- `Ping (ms)`: average across active net connections
-- `Loss In (%)`: inbound packet loss percent
-- `Loss Out (%)`: outbound packet loss percent
-- `Recv`: inbound bandwidth (B/s, KB/s, MB/s)
-- `Sent`: outbound bandwidth (B/s, KB/s, MB/s)
-- `Actors`: total actor count in world
-- `Net Actors`: replicated actor count (`GetIsReplicated()`)
+Multiplayer debugging can get noisy and slow. MultiplayerDebugTools keeps critical network and gameplay replication signals visible while you iterate:
 
-If no network connection is present, network-dependent metrics show `N/A`.
+- ✅ Fast session health checks in PIE
+- ✅ Visual thresholds for instant “good/warn/bad” feedback
+- ✅ Blueprint + C++ control points for custom workflows
+- ✅ Minimal runtime overhead and simple integration
+
+---
+
+## What You Can See In-Game
+
+| Metric | Description |
+|---|---|
+| `Role` | `Standalone`, `Client`, `Listen Server`, or `Dedicated Server` |
+| `FPS` | Sampled from `GAverageFPS` |
+| `Ping (ms)` | Average across active net connections |
+| `Loss In (%)` | Inbound packet loss |
+| `Loss Out (%)` | Outbound packet loss |
+| `Recv` | Inbound bandwidth (`B/s`, `KB/s`, `MB/s`) |
+| `Sent` | Outbound bandwidth (`B/s`, `KB/s`, `MB/s`) |
+| `Actors` | Total actor count in world |
+| `Net Actors` | Replicated actor count (`GetIsReplicated()`) |
+
+If no network connection exists, network-dependent metrics are shown as `N/A`.
+
+---
 
 ## Visual Thresholds
 
-- **FPS**
-  - Green: `>= 55`
-  - Yellow: `>= 25 and < 55`
-  - Red: `< 25`
-- **Ping**
-  - Green: `< 50 ms`
-  - Yellow: `< 100 ms`
-  - Red: `>= 100 ms`
-- **Packet Loss**
-  - Green: `< 1%`
-  - Yellow: `< 5%`
-  - Red: `>= 5%`
+### FPS
+- 🟢 Good: `>= 55`
+- 🟡 Warning: `>= 25 and < 55`
+- 🔴 Critical: `< 25`
 
-Disabled metrics show `Off` in a dim color.
+### Ping
+- 🟢 Good: `< 50 ms`
+- 🟡 Warning: `< 100 ms`
+- 🔴 Critical: `>= 100 ms`
+
+### Packet Loss
+- 🟢 Good: `< 1%`
+- 🟡 Warning: `< 5%`
+- 🔴 Critical: `>= 5%`
+
+Disabled metrics appear as `Off` in a dimmed style.
+
+---
 
 ## Installation
 
-1. Place `MultiplayerDebugTools` under your project `Plugins/` folder.
-2. Open the project in Unreal Editor.
-3. Enable **Multiplayer Debug Tools** from **Edit > Plugins**.
-4. Restart the editor when prompted.
+1. Copy `MultiplayerDebugTools` into your project `Plugins/` folder.
+2. Open your project in Unreal Editor.
+3. Enable **Multiplayer Debug Tools** via **Edit → Plugins**.
+4. Restart when prompted.
 
-## Quick Usage
+---
 
-- Press `F10` to toggle the overlay.
-- Or run `mdt.Toggle` in the console.
+## Quick Usage (PIE Multiplayer Check)
 
-For multiplayer validation in PIE:
+1. Set **Number of Players** to `2+`.
+2. Choose **Listen Server** play mode.
+3. Start PIE.
+4. Press `F10` in each window and compare values (role, ping, packet loss, bandwidth).
 
-1. Set **Number of Players** to 2+.
-2. Set play mode to **Listen Server**.
-3. Launch PIE.
-4. Toggle overlay per window and compare role/ping/loss/bandwidth values.
+---
 
 ## Blueprint API
 
-`UMultiplayerDebugSubsystem` is exposed to Blueprint and can be retrieved from Game Instance subsystem access.
+Access the subsystem through Game Instance subsystem access.
 
-### Functions
+### Main Functions
 
 - `ToggleOverlay()`
 - `IsOverlayVisible() -> bool`
@@ -87,9 +108,7 @@ For multiplayer validation in PIE:
 
 - `OnStatsUpdated(FMultiplayerDebugStatsSnapshot Snapshot)`
 
-### Feature Enum
-
-`EMultiplayerDebugMetric`:
+### `EMultiplayerDebugMetric`
 
 - `Role`
 - `FPS`
@@ -98,9 +117,7 @@ For multiplayer validation in PIE:
 - `Bandwidth`
 - `ActorCounts`
 
-### Snapshot Struct
-
-`FMultiplayerDebugStatsSnapshot` includes:
+### `FMultiplayerDebugStatsSnapshot`
 
 - `EnabledFeatures`
 - `NetRole`
@@ -114,9 +131,7 @@ For multiplayer validation in PIE:
 - `ReplicatedActors`
 - `bHasNetworkConnection`
 
-### Feature Toggle Struct
-
-`FMultiplayerDebugFeatureToggles` includes booleans:
+### `FMultiplayerDebugFeatureToggles`
 
 - `bRole`
 - `bFPS`
@@ -125,7 +140,9 @@ For multiplayer validation in PIE:
 - `bBandwidth`
 - `bActorCounts`
 
-## C++ Usage
+---
+
+## C++ Example
 
 ```cpp
 #include "MultiplayerDebugSubsystem.h"
@@ -147,39 +164,34 @@ Bind to updates:
 DebugSub->OnStatsUpdated.AddDynamic(this, &UMyObject::HandleStatsUpdated);
 ```
 
+---
+
 ## Runtime Behavior
 
-- Stats ticker interval default: `0.25s` (`SetStatsUpdateInterval` minimum clamp: `0.05s`).
-- Actor counts are internally refreshed at `1.0s` intervals.
-- Overlay refresh timer is `0.25s`.
-- Packet/bandwidth data is sampled from net driver connections:
-  - Client side uses `ServerConnection`.
-  - Server side aggregates `ClientConnections`.
-- Dedicated server builds (`UE_SERVER`) skip Slate overlay/input handling.
+- Stats ticker default: `0.25s` (minimum clamp via API: `0.05s`)
+- Actor count refresh: `1.0s`
+- Overlay refresh timer: `0.25s`
+- Data collection source:
+  - Client: `ServerConnection`
+  - Server: aggregated `ClientConnections`
+- Dedicated server (`UE_SERVER`) skips Slate overlay/input handling
 
-## Module Architecture
+---
 
-- `FMultiplayerDebugToolsModule`
-  - Registers `mdt.Toggle` console command.
-  - Registers an input preprocessor for `F10`.
-- `UMultiplayerDebugSubsystem`
-  - Collects and caches stats.
-  - Owns overlay visibility state.
-  - Emits `OnStatsUpdated`.
-- `SMultiplayerDebugOverlay`
-  - Draws the widget.
-  - Pulls subsystem snapshot and applies color/formatting.
+## Build Dependencies
 
-## Build and Dependencies
+- **Public:** `Core`, `CoreUObject`, `Engine`, `InputCore`
+- **Private (non-server):** `Slate`, `SlateCore`
 
-- Public: `Core`, `CoreUObject`, `Engine`, `InputCore`
-- Private (non-server targets): `Slate`, `SlateCore`
+If your game module includes plugin headers, add `"MultiplayerDebugTools"` to module dependencies.
 
-If your game module includes plugin headers, add `"MultiplayerDebugTools"` to your module dependencies.
+---
 
-## Limitations and Troubleshooting
+## Notes & Troubleshooting
 
-- Overlay requires a viewport (not visible on dedicated server process).
-- In standalone/non-networked sessions, network metrics are expected to be `N/A`.
-- If `F10` does nothing, test `mdt.Toggle` in console and check key interception.
-- If ping/loss/bandwidth show `N/A`, ensure the session is actually networked.
+:::note
+- No viewport means no overlay (expected on dedicated server process).
+- In non-networked sessions, network metrics showing `N/A` is expected.
+- If `F10` does nothing, try `mdt.Toggle` in console.
+- If ping/loss/bandwidth remains `N/A`, verify the session is actually networked.
+:::
