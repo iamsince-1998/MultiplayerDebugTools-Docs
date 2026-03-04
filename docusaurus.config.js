@@ -3,7 +3,7 @@ const { themes: prismThemes } = require('prism-react-renderer');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Plugins Docs',
+  title: 'MultiplayerDebugTools',
   tagline: 'Documentation for Unreal Engine plugins',
   favicon: 'img/logo.svg',
 
