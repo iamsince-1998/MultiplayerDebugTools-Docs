@@ -1,16 +1,19 @@
 ---
 id: intro
 slug: /
-title: Replicated Containers Docs
+title: Plugin Docs Home
 sidebar_position: 1
 ---
 
-# Replicated Containers Docs
+# Unreal Plugin Documentation
 
-Welcome! This site is dedicated to documentation for the **Replicated Containers** Unreal Engine plugin.
+Welcome! This site hosts documentation for available Unreal Engine plugins.
+
+**Live website:** https://iamsince-1998.github.io/MultiplayerDebugTools-Docs/
 
 ## Documentation
 
 | Plugin | Status | Docs |
 |---|---|---|
+| MultiplayerDebugTools | ✅ Live | [Open docs](/multiplayer-debug-tools/overview) |
 | Replicated Containers | ✅ Live | [Open docs](/replicated-containers/overview) |
